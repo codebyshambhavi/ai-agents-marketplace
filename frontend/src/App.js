@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { createAgent, getAgentById, getAgents, updateAgentRating } from "./api";
 import "./App.css";
-import logo from "./logo.svg";
 
 const STAR_VALUES = [1, 2, 3, 4, 5];
 const FAVORITES_STORAGE_KEY = "favoriteAgentIds";
@@ -402,7 +401,7 @@ function MarketplacePage({ theme, onToggleTheme }) {
 
       <nav className="top-nav">
         <div className="nav-brand">
-          <img src={logo} alt="Agentra logo" className="logo" />
+          <img src="/logo.svg" alt="Agentra logo" className="logo" />
           <span className="brand-text">Agentra</span>
         </div>
         <div className="nav-actions">
@@ -680,7 +679,7 @@ function AgentDetailsPage({ theme, onToggleTheme }) {
     <main className="app-container">
       <nav className="top-nav">
         <div className="nav-brand">
-          <img src={logo} alt="Agentra logo" className="logo" />
+          <img src="/logo.svg" alt="Agentra logo" className="logo" />
           <span className="brand-text">Agentra</span>
         </div>
         <div className="nav-actions">
