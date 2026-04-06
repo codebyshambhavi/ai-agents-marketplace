@@ -18,7 +18,9 @@ const agentSchema = new mongoose.Schema({
 	},
 	rating: {
 		type: Number,
-		default: 0,
+		min: [1, "Rating must be at least 1"],
+		max: [5, "Rating cannot be more than 5"],
+		default: 1,
 	},
 	createdAt: {
 		type: Date,
