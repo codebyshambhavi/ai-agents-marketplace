@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   BrowserRouter,
   Route,
@@ -37,6 +37,7 @@ const getStars = (ratingValue) => {
 
 function MarketplacePage({ theme, onToggleTheme }) {
   const navigate = useNavigate();
+  const initialFetchDoneRef = useRef(false);
   const [agents, setAgents] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
@@ -121,6 +122,12 @@ function MarketplacePage({ theme, onToggleTheme }) {
   }, [toast]);
 
   useEffect(() => {
+    // Prevent duplicate fetch in React Strict Mode development render cycle.
+    if (initialFetchDoneRef.current) {
+      return;
+    }
+
+    initialFetchDoneRef.current = true;
     fetchAgents();
   }, []);
 
@@ -185,6 +192,11 @@ function MarketplacePage({ theme, onToggleTheme }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (submitting) {
+      return;
+    }
+
     setMessage("");
     setError("");
 
@@ -261,6 +273,10 @@ function MarketplacePage({ theme, onToggleTheme }) {
 
     const previousAgent = agents.find((agent) => agent._id === agentId);
     if (!previousAgent) {
+      return;
+    }
+
+    if (Number(previousAgent.rating) === Number(newRating)) {
       return;
     }
 
@@ -372,6 +388,8 @@ function MarketplacePage({ theme, onToggleTheme }) {
     () => agents.filter((agent) => favoriteIdSet.has(agent._id)).length,
     [agents, favoriteIdSet]
   );
+
+  const skeletonCards = useMemo(() => Array.from({ length: 6 }, (_, index) => index), []);
 
   return (
     <main className="app-container">
@@ -522,10 +540,19 @@ function MarketplacePage({ theme, onToggleTheme }) {
         </section>
 
         {loading && (
-          <div className="loading-wrap" role="status" aria-live="polite">
-            <span className="spinner" aria-hidden="true"></span>
-            <p className="status-text">Loading agents...</p>
-          </div>
+          <section className="skeleton-grid" aria-label="Loading agents" aria-live="polite">
+            {skeletonCards.map((skeletonId) => (
+              <article className="skeleton-card" key={skeletonId}>
+                <div className="skeleton-line skeleton-title"></div>
+                <div className="skeleton-line"></div>
+                <div className="skeleton-line"></div>
+                <div className="skeleton-row">
+                  <div className="skeleton-pill"></div>
+                  <div className="skeleton-stars"></div>
+                </div>
+              </article>
+            ))}
+          </section>
         )}
 
         {!loading && error && <p className="status-text error-text">{error}</p>}
@@ -617,11 +644,18 @@ function MarketplacePage({ theme, onToggleTheme }) {
 function AgentDetailsPage({ theme, onToggleTheme }) {
   const navigate = useNavigate();
   const { id } = useParams();
+  const initialDetailsFetchDoneRef = useRef(false);
   const [agent, setAgent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (initialDetailsFetchDoneRef.current) {
+      return;
+    }
+
+    initialDetailsFetchDoneRef.current = true;
+
     const fetchAgent = async () => {
       try {
         setLoading(true);
