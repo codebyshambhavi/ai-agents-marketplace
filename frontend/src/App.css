@@ -109,17 +109,19 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  font-weight: 600;
 }
 
 .brand-text {
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: 0.2px;
 }
 
 .logo {
   height: 32px;
-  width: auto;
+  width: 32px;
+  object-fit: contain;
   display: block;
 }
 
@@ -827,7 +829,8 @@ select.search-input {
   }
 
   .logo {
-    height: 28px;
+    height: 32px;
+    width: 32px;
   }
 
   .nav-actions {
