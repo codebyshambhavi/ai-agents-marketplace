@@ -7,6 +7,9 @@ dotenv.config();
 const app = express();
 const PORT = 5000;
 
+const cors = require("cors");
+app.use(cors());
+
 app.use(express.json());
 
 const agentRoutes = require("./routes/agentRoutes");
