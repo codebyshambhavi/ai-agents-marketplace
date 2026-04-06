@@ -402,7 +402,7 @@ function MarketplacePage({ theme, onToggleTheme }) {
 
       <nav className="top-nav">
         <div className="nav-brand">
-          <img src="/logo.svg" alt="Agentra logo" className="logo" />
+          <img src={logo} alt="Agentra logo" className="logo" />
           <span className="brand-text">Agentra</span>
         </div>
         <div className="nav-actions">
