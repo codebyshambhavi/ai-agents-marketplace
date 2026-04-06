@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { createAgent, getAgentById, getAgents, updateAgentRating } from "./api";
 import "./App.css";
+import logo from "./logo.svg";
 
 const STAR_VALUES = [1, 2, 3, 4, 5];
 const FAVORITES_STORAGE_KEY = "favoriteAgentIds";
@@ -400,7 +401,10 @@ function MarketplacePage({ theme, onToggleTheme }) {
       )}
 
       <nav className="top-nav">
-        <div className="nav-brand">AI Agents Marketplace</div>
+        <div className="nav-brand">
+          <img src={logo} alt="Agentra logo" className="logo" />
+          <span className="brand-text">Agentra</span>
+        </div>
         <div className="nav-actions">
           <button type="button" className="theme-toggle" onClick={onToggleTheme}>
             {theme === "dark" ? "Light Mode" : "Dark Mode"}
@@ -675,7 +679,10 @@ function AgentDetailsPage({ theme, onToggleTheme }) {
   return (
     <main className="app-container">
       <nav className="top-nav">
-        <div className="nav-brand">AI Agents Marketplace</div>
+        <div className="nav-brand">
+          <img src={logo} alt="Agentra logo" className="logo" />
+          <span className="brand-text">Agentra</span>
+        </div>
         <div className="nav-actions">
           <button type="button" className="theme-toggle" onClick={onToggleTheme}>
             {theme === "dark" ? "Light Mode" : "Dark Mode"}

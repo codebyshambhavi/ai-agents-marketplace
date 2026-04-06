@@ -106,9 +106,21 @@ body {
 }
 
 .nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-text {
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.2px;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+  display: block;
 }
 
 .nav-chip {
@@ -807,6 +819,15 @@ select.search-input {
   .nav-brand {
     font-size: 0.95rem;
     text-align: center;
+    justify-content: center;
+  }
+
+  .brand-text {
+    font-size: 0.95rem;
+  }
+
+  .logo {
+    height: 28px;
   }
 
   .nav-actions {
