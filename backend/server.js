@@ -1,15 +1,13 @@
 const express = require("express");
-const dotenv = require("dotenv");
+const cors = require("cors");
 const connectDB = require("./config/db");
-
-dotenv.config();
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const cors = require("cors");
+// Middleware order: CORS first, then JSON parser.
 app.use(cors());
-
 app.use(express.json());
 
 const agentRoutes = require("./routes/agentRoutes");
@@ -22,9 +20,15 @@ app.get("/", (req, res) => {
 
 const startServer = async () => {
   try {
-    await connectDB();
+    console.log("Starting server...");
+    const dbConnected = await connectDB();
+
+    if (!dbConnected) {
+      console.warn("Database is not connected. Check MONGO_URI for full functionality.");
+    }
+
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`Server started successfully on port ${PORT}`);
     });
   } catch (error) {
     console.error("Failed to start server:", error.message);
